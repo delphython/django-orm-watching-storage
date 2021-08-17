@@ -5,18 +5,11 @@ import dj_database_url
 
 load_dotenv()
 
-DATABASES = {
-    'default': {
-        'DB_ENGINE': os.environ['DB_ENGINE'],
-        'DB_HOST': os.environ['DB_HOST'],
-        'DB_PORT': os.environ['DB_PORT'],
-        'DB_NAME': os.environ['DB_NAME'],
-        'DB_USER': os.environ['DB_USER'],
-        'DB_PASSWORD': os.environ['DB_PASSWORD'],
-    }
-}
+DATABASES = {}
 
-DATABASES['default'] = dj_database_url.parse('postgres://...', conn_max_age=600)
+database_url = f"postgres://{os.environ['DB_USER']}:{os.environ['DB_PASSWORD']}@{os.environ['DB_HOST']}:{os.environ['DB_PORT']}/{os.environ['DB_NAME']}"
+
+DATABASES["default"] = dj_database_url.parse(database_url, conn_max_age=600)
 
 INSTALLED_APPS = ['datacenter']
 

@@ -1,26 +1,29 @@
 import os
-from dotenv import load_dotenv
 import dj_database_url
+import environ
 
 
-load_dotenv()
+env = environ.Env(
+    DEBUG=(bool, False),
+    ALLOWED_HOSTS=(list, [])
+)
+env.read_env(env.str('./', '.env'))
+
+DEBUG = env('DEBUG')
 
 DATABASES = {}
 
-DATABASE_URL = os.environ['DATABASE_URL']
+DATABASE_URL = env('DATABASE_URL')
 
 DATABASES["default"] = dj_database_url.parse(DATABASE_URL, conn_max_age=600)
 
 INSTALLED_APPS = ['datacenter']
 
-SECRET_KEY = os.environ['SECRET_KEY']
-
-DEBUG = os.environ["LOG_LEVEL"]
+SECRET_KEY = env('SECRET_KEY')
 
 ROOT_URLCONF = "project.urls"
 
-ALLOWED_HOSTS = [".localhost", "127.0.0.1", "[::1]"]
-
+ALLOWED_HOSTS: list[str] = env('ALLOWED_HOSTS')
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATES = [
@@ -34,8 +37,8 @@ TEMPLATES = [
 
 USE_L10N = True
 
-LANGUAGE_CODE = os.environ['LANGUAGE_CODE']
+LANGUAGE_CODE = env('LANGUAGE_CODE')
 
-TIME_ZONE = os.environ['TIME_ZONE']
+TIME_ZONE = env('TIME_ZONE')
 
 USE_TZ = True

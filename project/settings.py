@@ -7,9 +7,9 @@ load_dotenv()
 
 DATABASES = {}
 
-database_url = f"postgres://{os.environ['DB_USER']}:{os.environ['DB_PASSWORD']}@{os.environ['DB_HOST']}:{os.environ['DB_PORT']}/{os.environ['DB_NAME']}"
+DATABASE_URL = os.environ['DATABASE_URL']
 
-DATABASES["default"] = dj_database_url.parse(database_url, conn_max_age=600)
+DATABASES["default"] = dj_database_url.parse(DATABASE_URL, conn_max_age=600)
 
 INSTALLED_APPS = ['datacenter']
 

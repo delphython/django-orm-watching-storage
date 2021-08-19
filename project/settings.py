@@ -1,11 +1,10 @@
 import os
-import dj_database_url
 import environ
 
 
 env = environ.Env(
     DEBUG=(bool, False),
-    ALLOWED_HOSTS=(list, [])
+    ALLOWED_HOSTS=(list, []),
 )
 env.read_env(env.str('./', '.env'))
 
@@ -13,9 +12,8 @@ DEBUG = env('DEBUG')
 
 DATABASES = {}
 
-DATABASE_URL = env('DATABASE_URL')
-
-DATABASES["default"] = dj_database_url.parse(DATABASE_URL, conn_max_age=600)
+DATABASES["default"] = env.db(
+    'DATABASE_URL', default="postgres://user:password@domain.yourdomain.org:5434/yourdatabase")
 
 INSTALLED_APPS = ['datacenter']
 
